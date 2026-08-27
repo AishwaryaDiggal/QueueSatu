@@ -12,6 +12,28 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase Compat SDKs (CDN) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    
+    <script>
+      // Your Live Firebase Configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCawnCKSwBTimdQMmYAp83gjZcmwGFMqgg",
+        authDomain: "queuesetu.firebaseapp.com",
+        databaseURL: "https://queuesetu-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "queuesetu",
+        storageBucket: "queuesetu.firebasestorage.app",
+        messagingSenderId: "912146974181",
+        appId: "1:912146974181:web:a0340e3247ec8915d51b0c"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.database();
+    </script>
+
     <style>
         body { font-family: 'Inter', sans-serif; }
         #map { height: 350px; width: 100%; border-radius: 0.75rem; }
@@ -182,7 +204,7 @@
                     <div id="booking-success-box" class="hidden mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-center">
                         <div class="text-emerald-700 font-bold text-sm mb-1" data-key="success_slot_secured">🎉 Slot Secured Successfully!</div>
                         <p class="text-xs text-slate-600 mb-2"><span data-key="token_id_label">Token ID:</span> <span id="token-display" class="font-mono font-bold text-emerald-800">QS-BBS-842</span></p>
-                        <p class="text-[11px] text-slate-500" data-key="sms_dispatched">SMS confirmation code dispatched to your registered mobile device[cite: 1].</p>
+                        <p class="text-[11px] text-slate-500" data-key="sms_dispatched">Saved to Firebase Live Database & SMS confirmation dispatched.</p>
                     </div>
                 </div>
             </div>
@@ -294,14 +316,13 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 mt-12 py-4">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2">
-            <p data-key="footer_rights">© 2026 QueueSetu Odisha. All rights reserved. Powered by Firebase Realtime Sync[cite: 1].</p>
+            <p data-key="footer_rights">© 2026 QueueSetu Odisha. All rights reserved. Powered by Firebase Realtime Sync.</p>
             <p><span data-key="footer_hotline">Support Hotline:</span> <strong class="text-slate-700">1800-180-1551</strong> (Kisan Call Center)</p>
         </div>
     </footer>
 
-    <!-- App Logic & Translation Script -->
+    <!-- App Logic, Firebase Actions & Translation Script -->
     <script>
-        // Dictionary for English and Hindi Translations
         const translations = {
             en: {
                 helpline_banner: "🌾 Govt of Odisha Initiative | National Toll-Free Kisan Helpline: <strong class=\"text-white\">1800-180-1551</strong>",
@@ -340,7 +361,7 @@
                 btn_confirm_token: "Confirm & Generate Token",
                 success_slot_secured: "🎉 Slot Secured Successfully!",
                 token_id_label: "Token ID:",
-                sms_dispatched: "SMS confirmation code dispatched to your registered mobile device[cite: 1].",
+                sms_dispatched: "Saved to Firebase Live Database & SMS confirmation dispatched.",
                 alerts_heading: "Active Procurement Slot & Live Status",
                 realtime_sync: "Real-Time Sync",
                 no_booking_title: "No Active Booking Found",
@@ -362,7 +383,7 @@
                 support_subheading: "Need assistance with your procurement token or queue slot? Call the toll-free support lines below.",
                 support_kisan: "National Kisan Call Center Toll-Free Helpline",
                 support_odisha: "Odisha Food Supplies & Consumer Welfare Desk",
-                footer_rights: "© 2026 QueueSetu Odisha. All rights reserved. Powered by Firebase Realtime Sync[cite: 1].",
+                footer_rights: "© 2026 QueueSetu Odisha. All rights reserved. Powered by Firebase Realtime Sync.",
                 footer_hotline: "Support Hotline:"
             },
             hi: {
@@ -402,7 +423,7 @@
                 btn_confirm_token: "पुष्टि करें और टोकन जनरेट करें",
                 success_slot_secured: "🎉 स्लॉट सफलतापूर्वक सुरक्षित हो गया!",
                 token_id_label: "टोकन आईडी:",
-                sms_dispatched: "आपके पंजीकृत मोबाइल डिवाइस पर एसएमएस पुष्टिकरण कोड भेज दिया गया है[cite: 1].",
+                sms_dispatched: "फायरबेस लाइव डेटाबेस में सहेजा गया और एसएमएस भेजा गया.",
                 alerts_heading: "सक्रिय खरीद स्लॉट और लाइव स्थिति",
                 realtime_sync: "रियल-टाइम सिंक",
                 no_booking_title: "कोई सक्रिय बुकिंग नहीं मिली",
@@ -424,7 +445,7 @@
                 support_subheading: "अपने खरीद टोकन या कतार स्लॉट के लिए सहायता चाहिए? नीचे दिए गए टोल-फ्री नंबरों पर कॉल करें।",
                 support_kisan: "राष्ट्रीय किसान कॉल सेंटर टोल-फ्री हेल्पलाइन",
                 support_odisha: "ओडिशा खाद्य आपूर्ति और उपभोक्ता कल्याण डेस्क",
-                footer_rights: "© 2026 क्युसेतु ओडिशा। सर्वाधिकार सुरक्षित। फ़ायरबेस रीयलटाइम सिंक द्वारा संचालित[cite: 1].",
+                footer_rights: "© 2026 क्युसेतु ओडिशा। सर्वाधिकार सुरक्षित। फ़ायरबेस रीयलटाइम सिंक द्वारा संचालित.",
                 footer_hotline: "सहायता हॉटलाइन:"
             }
         };
@@ -441,10 +462,8 @@
             });
         };
 
-        // Global state storage for active booking
         let activeBooking = null;
 
-        // View Switcher Router
         window.switchView = function(viewName) {
             ['dashboard', 'alerts', 'ai-analysis', 'support'].forEach(v => {
                 document.getElementById('view-' + v).classList.add('hidden');
@@ -478,7 +497,6 @@
             `;
         };
 
-        // Leaflet Map Initialization centered on Bhubaneswar
         const map = L.map('map').setView([20.2961, 85.8245], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -504,6 +522,7 @@
             map.setView([lat, lng], 14);
         };
 
+        // Live Database Booking Handler connected to Firebase Realtime Database
         window.handleBookingSubmit = function(event) {
             event.preventDefault();
             const randomToken = "QS-BBS-" + Math.floor(100 + Math.random() * 900);
@@ -513,12 +532,20 @@
                 name: document.getElementById('farmer-name').value,
                 phone: document.getElementById('farmer-phone').value,
                 location: currentHub,
-                timing: document.getElementById('slot-time').value
+                timing: document.getElementById('slot-time').value,
+                timestamp: Date.now()
             };
 
-            document.getElementById('token-display').textContent = randomToken;
-            document.getElementById('slot-booking-form').reset();
-            document.getElementById('booking-success-box').classList.remove('hidden');
+            // Save live data to your Firebase database instance
+            db.ref('bookings/' + randomToken).set(activeBooking)
+              .then(() => {
+                  document.getElementById('token-display').textContent = randomToken;
+                  document.getElementById('slot-booking-form').reset();
+                  document.getElementById('booking-success-box').classList.remove('hidden');
+              })
+              .catch((error) => {
+                  alert("Database connection error: " + error.message);
+              });
         };
 
         window.updateLiveSignalStatus = function() {
