@@ -277,8 +277,8 @@
         <!-- VIEW 3: AI Crop Analysis Page -->
         <div id="view-ai-analysis" class="hidden space-y-6 max-w-2xl mx-auto">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h2 class="text-lg font-bold text-slate-900 mb-1" data-key="ai_heading">AI Crop Quality & Moisture Inspector</h2>
-                <p class="text-xs text-slate-500 mb-6" data-key="ai_subheading">Upload or capture an image of your harvested sample for automated computer vision grading and estimated market price analysis.</p>
+                <h2 class="text-lg font-bold text-slate-900 mb-1" data-key="ai_heading">AI Crop Quality & Disease Inspector</h2>
+                <p class="text-xs text-slate-500 mb-6" data-key="ai_subheading">Upload or capture an image of your harvested sample or crop leaves for automated computer vision health grading, disease detection, and market valuation.</p>
                 
                 <div class="space-y-4">
                     <div class="border-2 border-dashed border-slate-300 p-6 rounded-xl text-center hover:border-emerald-500 transition cursor-pointer" onclick="document.getElementById('crop-file-input').click()">
@@ -290,7 +290,7 @@
 
                     <div id="ai-loading" class="hidden text-center py-6">
                         <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-emerald-600 border-t-transparent"></div>
-                        <p class="text-xs text-slate-600 mt-2 font-medium" data-key="ai_analyzing">Analyzing grain density, moisture reflection, and impurities...</p>
+                        <p class="text-xs text-slate-600 mt-2 font-medium" data-key="ai_analyzing">Scanning grain structure, moisture level, and diagnosing leaf or grain diseases...</p>
                     </div>
 
                     <div id="ai-results-box" class="hidden space-y-4 mt-6 p-4 bg-emerald-50/60 border border-emerald-200 rounded-xl">
@@ -305,8 +305,8 @@
                                 <strong id="ai-quality" class="text-emerald-800 text-sm font-bold">Grade A Premium</strong>
                             </div>
                             <div class="bg-white p-3 rounded-lg border border-emerald-100">
-                                <span class="text-slate-500 block" data-key="ai_impurities_label">Foreign Impurities</span>
-                                <strong id="ai-impurities" class="text-slate-800 text-sm font-bold">0.4% (Low)</strong>
+                                <span class="text-slate-500 block" data-key="ai_disease_label">Crop Disease</span>
+                                <strong id="ai-disease" class="text-emerald-700 text-sm font-bold">No Pathogen Detected (Healthy)</strong>
                             </div>
                             <div class="bg-white p-3 rounded-lg border border-emerald-100">
                                 <span class="text-slate-500 block" data-key="ai_price_label">Expected MSP Valuation</span>
@@ -396,14 +396,14 @@
                 label_hub_location: "Registered Hub Location:",
                 label_allocated_time: "Allocated Time Window:",
                 label_farmer_contact: "Farmer Name / Contact:",
-                ai_heading: "AI Crop Quality & Moisture Inspector",
-                ai_subheading: "Upload or capture an image of your harvested sample for automated computer vision grading and estimated market price analysis.",
+                ai_heading: "AI Crop Quality & Disease Inspector",
+                ai_subheading: "Upload or capture an image of your harvested sample or crop leaves for automated computer vision health grading, disease detection, and market valuation.",
                 ai_upload_text: "Click to upload crop sample image",
-                ai_analyzing: "Analyzing grain density, moisture reflection, and impurities...",
+                ai_analyzing: "Scanning grain structure, moisture level, and diagnosing leaf or grain diseases...",
                 ai_report_title: "🤖 AI Inspection Report Summary",
                 ai_moisture_label: "Estimated Moisture",
                 ai_quality_label: "Quality Grade",
-                ai_impurities_label: "Foreign Impurities",
+                ai_disease_label: "Crop Disease",
                 ai_price_label: "Expected MSP Valuation",
                 support_heading: "Official Government Helpline Support",
                 support_subheading: "Need assistance with your procurement token or queue slot? Call the toll-free support lines below.",
@@ -458,14 +458,14 @@
                 label_hub_location: "पंजीकृत हब स्थान:",
                 label_allocated_time: "आवंटित समय खिड़की:",
                 label_farmer_contact: "किसान का नाम / संपर्क:",
-                ai_heading: "AI फसल गुणवत्ता और नमी निरीक्षक",
-                ai_subheading: "स्वचालित कंप्यूटर विजन ग्रेडिंग और अनुमानित बाजार मूल्य विश्लेषण के लिए अपने कटे हुए नमूने की छवि अपलोड या कैप्चर करें।",
+                ai_heading: "AI फसल गुणवत्ता और रोग निरीक्षक",
+                ai_subheading: "स्वचालित कंप्यूटर विज़न स्वास्थ्य ग्रेडिंग, रोग पहचान और बाजार मूल्य विश्लेषण के लिए अपनी फसल के नमूने या पत्तियों की छवि अपलोड करें।",
                 ai_upload_text: "फसल नमूना छवि अपलोड करने के लिए क्लिक करें",
-                ai_analyzing: "दाने के घनत्व, नमी और अशुद्धियों का विश्लेषण किया जा रहा है...",
+                ai_analyzing: "दाने की बनावट, नमी और फसल रोगों का विश्लेषण किया जा रहा है...",
                 ai_report_title: "🤖 AI निरीक्षण रिपोर्ट सारांश",
                 ai_moisture_label: "अनुमानित नमी",
                 ai_quality_label: "गुणवत्ता ग्रेड",
-                ai_impurities_label: "विदेशी अशुद्धियाँ",
+                ai_disease_label: "फसल रोग (Crop Disease)",
                 ai_price_label: "अपेक्षित एमएसपी मूल्यांकन",
                 support_heading: "आधिकारिक सरकारी हेल्पलाइन सहायता",
                 support_subheading: "अपने खरीद टोकन या कतार स्लॉट के लिए सहायता चाहिए? नीचे दिए गए टोल-फ्री नंबरों पर कॉल करें।",
