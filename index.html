@@ -73,28 +73,57 @@
         </header>
     </div>
 
-    <!-- Clean Embedded Authentication Modal (Fixes Leaflet Map Overlap Bug) -->
+    <!-- Clean Embedded Authentication Modal with Separate Tabs & Toggle Eyes -->
     <div id="auth-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative border border-slate-200">
             <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg font-bold">&times;</button>
-            <div class="text-center mb-5">
-                <div class="bg-emerald-100 text-emerald-700 p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                </div>
-                <h3 class="font-bold text-slate-900 text-lg" id="modal-title">Farmer Login or Register</h3>
-                <p class="text-xs text-slate-500 mt-1">Access secure procurement slots and live queue tracking.</p>
+            
+            <!-- Tab Selector: Login vs Signup -->
+            <div class="flex border-b border-slate-200 mb-5">
+                <button id="tab-login-btn" onclick="switchAuthTab('login')" class="flex-1 pb-2 text-sm font-bold text-emerald-600 border-b-2 border-emerald-600 transition">Login</button>
+                <button id="tab-signup-btn" onclick="switchAuthTab('signup')" class="flex-1 pb-2 text-sm font-medium text-slate-500 hover:text-slate-800 transition">Register / Sign Up</button>
             </div>
-            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+
+            <!-- LOGIN FORM -->
+            <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-medium text-slate-700 mb-1">Email Address</label>
-                    <input type="email" id="auth-email" required placeholder="farmer@example.com" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <input type="email" id="login-email" required placeholder="farmer@example.com" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-700 mb-1">Password</label>
+                    <div class="relative">
+                        <input type="password" id="login-password" required placeholder="••••••••" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 text-xs font-semibold">Show</button>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 px-4 rounded-lg text-sm transition shadow-sm">
+                    Login to Dashboard
+                </button>
+            </form>
+
+            <!-- SIGNUP FORM -->
+            <form id="signup-form" onsubmit="handleSignupSubmit(event)" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs font-medium text-slate-700 mb-1">Email Address</label>
+                    <input type="email" id="signup-email" required placeholder="farmer@example.com" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-700 mb-1">Password (Min 6 Characters)</label>
-                    <input type="password" id="auth-password" required placeholder="••••••••" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <div class="relative">
+                        <input type="password" id="signup-password" required placeholder="••••••••" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <button type="button" onclick="togglePasswordVisibility('signup-password', this)" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 text-xs font-semibold">Show</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-700 mb-1">Confirm Password</label>
+                    <div class="relative">
+                        <input type="password" id="signup-confirm-password" required placeholder="••••••••" class="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <button type="button" onclick="togglePasswordVisibility('signup-confirm-password', this)" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 text-xs font-semibold">Show</button>
+                    </div>
                 </div>
                 <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 px-4 rounded-lg text-sm transition shadow-sm">
-                    Continue to Dashboard
+                    Create Account & Login
                 </button>
             </form>
         </div>
@@ -278,7 +307,7 @@
         <div id="view-ai-analysis" class="hidden space-y-6 max-w-2xl mx-auto">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <h2 class="text-lg font-bold text-slate-900 mb-1" data-key="ai_heading">AI Crop Quality & Disease Inspector</h2>
-                <p class="text-xs text-slate-500 mb-6" data-key="ai_subheading">Upload or capture an image of your harvested sample or crop leaves for automated computer vision health grading, disease detection, and market valuation.</p>
+                <p class="text-xs text-slate-500 mb-6" data-key="ai_subheading">Upload or capture an image of your harvested sample or crop leaves for automated computer vision health grading, crop disease analysis, and market valuation.</p>
                 
                 <div class="space-y-4">
                     <div class="border-2 border-dashed border-slate-300 p-6 rounded-xl text-center hover:border-emerald-500 transition cursor-pointer" onclick="document.getElementById('crop-file-input').click()">
@@ -290,7 +319,7 @@
 
                     <div id="ai-loading" class="hidden text-center py-6">
                         <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-emerald-600 border-t-transparent"></div>
-                        <p class="text-xs text-slate-600 mt-2 font-medium" data-key="ai_analyzing">Scanning grain structure, moisture level, and diagnosing leaf or grain diseases...</p>
+                        <p class="text-xs text-slate-600 mt-2 font-medium" data-key="ai_analyzing">Scanning grain structure, moisture level, and diagnosing crop disease...</p>
                     </div>
 
                     <div id="ai-results-box" class="hidden space-y-4 mt-6 p-4 bg-emerald-50/60 border border-emerald-200 rounded-xl">
@@ -397,9 +426,9 @@
                 label_allocated_time: "Allocated Time Window:",
                 label_farmer_contact: "Farmer Name / Contact:",
                 ai_heading: "AI Crop Quality & Disease Inspector",
-                ai_subheading: "Upload or capture an image of your harvested sample or crop leaves for automated computer vision health grading, disease detection, and market valuation.",
+                ai_subheading: "Upload or capture an image of your harvested sample or crop leaves for automated computer vision health grading, crop disease analysis, and market valuation.",
                 ai_upload_text: "Click to upload crop sample image",
-                ai_analyzing: "Scanning grain structure, moisture level, and diagnosing leaf or grain diseases...",
+                ai_analyzing: "Scanning grain structure, moisture level, and diagnosing crop disease...",
                 ai_report_title: "🤖 AI Inspection Report Summary",
                 ai_moisture_label: "Estimated Moisture",
                 ai_quality_label: "Quality Grade",
@@ -459,7 +488,7 @@
                 label_allocated_time: "आवंटित समय खिड़की:",
                 label_farmer_contact: "किसान का नाम / संपर्क:",
                 ai_heading: "AI फसल गुणवत्ता और रोग निरीक्षक",
-                ai_subheading: "स्वचालित कंप्यूटर विज़न स्वास्थ्य ग्रेडिंग, रोग पहचान और बाजार मूल्य विश्लेषण के लिए अपनी फसल के नमूने या पत्तियों की छवि अपलोड करें।",
+                ai_subheading: "स्वचालित कंप्यूटर विज़न स्वास्थ्य ग्रेडिंग, फसल रोग विश्लेषण और बाजार मूल्य मूल्यांकन के लिए अपनी फसल के नमूने या पत्तियों की छवि अपलोड करें।",
                 ai_upload_text: "फसल नमूना छवि अपलोड करने के लिए क्लिक करें",
                 ai_analyzing: "दाने की बनावट, नमी और फसल रोगों का विश्लेषण किया जा रहा है...",
                 ai_report_title: "🤖 AI निरीक्षण रिपोर्ट सारांश",
@@ -507,13 +536,45 @@
             document.getElementById('auth-modal').classList.add('hidden');
         };
 
+        // Tab Switching for Login / Signup
+        window.switchAuthTab = function(tab) {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const loginBtn = document.getElementById('tab-login-btn');
+            const signupBtn = document.getElementById('tab-signup-btn');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                loginBtn.className = "flex-1 pb-2 text-sm font-bold text-emerald-600 border-b-2 border-emerald-600 transition";
+                signupBtn.className = "flex-1 pb-2 text-sm font-medium text-slate-500 hover:text-slate-800 transition";
+            } else {
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                signupBtn.className = "flex-1 pb-2 text-sm font-bold text-emerald-600 border-b-2 border-emerald-600 transition";
+                loginBtn.className = "flex-1 pb-2 text-sm font-medium text-slate-500 hover:text-slate-800 transition";
+            }
+        };
+
+        // Password Show/Hide Toggle
+        window.togglePasswordVisibility = function(fieldId, btnEl) {
+            const field = document.getElementById(fieldId);
+            if (field.type === 'password') {
+                field.type = 'text';
+                btnEl.textContent = 'Hide';
+            } else {
+                field.type = 'password';
+                btnEl.textContent = 'Show';
+            }
+        };
+
         let currentUserEmail = null;
         let activeBooking = null;
 
-        window.handleAuthSubmit = function(event) {
+        window.handleLoginSubmit = function(event) {
             event.preventDefault();
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
 
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
@@ -521,19 +582,29 @@
                     handleSuccessfulAuth(userCredential.user.email);
                 })
                 .catch((error) => {
-                    if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-email') {
-                        auth.createUserWithEmailAndPassword(email, password)
-                            .then((newUserCredential) => {
-                                closeAuthModal();
-                                alert(currentLang === 'en' ? "Account created and logged in successfully!" : "खाता बनाया गया और सफलतापूर्वक लॉगिन किया गया!");
-                                handleSuccessfulAuth(newUserCredential.user.email);
-                            })
-                            .catch((regError) => {
-                                alert("Auth Error: " + regError.message);
-                            });
-                    } else {
-                        alert("Login Error: " + error.message);
-                    }
+                    alert("Login Failed: " + error.message);
+                });
+        };
+
+        window.handleSignupSubmit = function(event) {
+            event.preventDefault();
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert(currentLang === 'en' ? "Passwords do not match! Please re-enter matching passwords." : "पासवर्ड मेल नहीं खाते! कृपया मिलान करने वाले पासवर्ड दोबारा दर्ज करें।");
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    closeAuthModal();
+                    alert(currentLang === 'en' ? "Account created successfully!" : "खाता सफलतापूर्वक बनाया गया!");
+                    handleSuccessfulAuth(userCredential.user.email);
+                })
+                .catch((error) => {
+                    alert("Sign Up Error: " + error.message);
                 });
         };
 
